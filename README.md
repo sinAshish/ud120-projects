@@ -1,2 +1,4 @@
-# ud120-projects
-The problem sets solved for Udacity's Intro to Machine Learning 
+ud120-projects
+==============
+
+Starter project code for students taking Udacity ud120
