@@ -1,4 +1,10 @@
 ud120-projects
 ==============
 
-Starter project code for students taking Udacity ud120
+The projects done for Udacity's ud120.
+
+### Setting up system
+`<br>
+> Got to ../tools/
+> run startup.py #to download the data and necessary files
+`
