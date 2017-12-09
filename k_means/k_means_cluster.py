@@ -14,6 +14,8 @@ import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 
+from sklearn.preprocessing import MinMaxScaler
+
 
 
 
@@ -43,6 +45,38 @@ data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r")
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
+#scaling
+salary = []
+ex_stok = []
+for users in data_dict:
+    val = data_dict[users]["salary"]
+    if val == 'NaN':
+        continue
+    salary.append(float(val))
+    val = data_dict[users]["exercised_stock_options"]
+    if val == 'NaN':
+        continue
+    ex_stok.append(float(val))
+    
+salary = [min(salary),200000.0,max(salary)]
+ex_stok = [min(ex_stok),1000000.0,max(ex_stok)]
+print "min max salry"
+print salary
+print ex_stok
+
+salary = numpy.array([[e] for e in salary])
+ex_stok = numpy.array([[e] for e in ex_stok])
+
+scaler_salary = MinMaxScaler()
+scaler_stok = MinMaxScaler()
+
+rescaled_salary = scaler_salary.fit_transform(salary)
+rescaled_stock = scaler_salary.fit_transform(ex_stok)
+
+
+print "rescaled salry"
+print rescaled_salary
+print rescaled_stock
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
@@ -53,7 +87,7 @@ features_list = [poi, feature_1, feature_2,'total_payments']
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
-print max(finance_features['total_payments'])
+
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
